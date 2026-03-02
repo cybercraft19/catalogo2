@@ -1,0 +1,193 @@
+html {
+    scroll-behavior: smooth;
+    background-color: black;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100%;
+    background-image: url(assets/img/moticowall.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.menu {
+    position: fixed;
+    color: white;
+    background: hsla(0, 0%, 100%, 0.2);
+}
+
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    padding: 20px;
+    height: 100vh;
+}
+
+
+.contenedor img {
+    width: 100%;
+    height: auto;
+}
+
+
+.susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
+    border-radius: 30px;
+    position: relative;
+}
+
+.susuki:hover, .yamaha:hover, .ktm:hover, .nmax:hover, .auteco:hover, .camilo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px white,
+                0 0 10px white,
+                0 0 15px white;
+    transition: 0.3s ease;
+}
+
+.title {
+    font-size: 45px;
+    margin: 20px 0;
+    text-align: center;
+    color:white;
+    text-shadow: 5px 0 0 black;
+}
+
+.hi {
+    font-size: 40px;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-shadow: 5px 0 0 black;
+}
+
+.susuki2, .camilo2, .yamaha2, .ktm2, .nmax2, .auteco2 {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 5px;
+}
+
+/* ===== RELOJ ===== */
+#reloj {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background-color: hsla(0, 0%, 0%, 0.5);
+}
+
+/* Suaviza animaciones */
+.susuki, .yamaha, .ktm {
+    transition: transform 0.1s linear;
+}
+
+/* ======================
+   BOTÓN MENÚ
+====================== */
+#menu-btn {
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 1001;
+}
+
+/* ======================
+   SIDEBAR
+====================== */
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0; /* Empieza cerrado */
+    height: 100%;
+    background: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1002;
+}
+
+/* Enlaces dentro del menú */
+#sidebar a {
+    padding: 10px 20px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+#sidebar a:hover {
+    background: #333;
+}
+
+/* ======================
+   FONDO OSCURO
+====================== */
+#blur-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* ===== sección videos ===== */
+
+#videos {
+    background: #111;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.titulo-videos {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.contenedor-videos {
+    display: flex;
+    justify-content: space-around; /* los centra */
+    gap: 5px; /* espacio entre ellos */
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    
+}
+
+.video-card {
+    width: 100%; /* tamaño fijo bonito */
+    height: 500px;
+}
+
+.video-card video {
+    width: 100%; /* ocupa todo el ancho del card */
+    height: 100%; /* mantiene proporción */
+    border-radius: 20px; /* bordes suaves */
+}
+
+section {
+    height: 100vh;
+}
