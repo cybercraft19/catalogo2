@@ -1,14 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Optimización para dispositivos con movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 html {
     scroll-behavior: smooth;
-    background-color: black;
-    box-sizing: border-box;
-    height: 100vh;
+    background-color: #0a0a0a;
+    height: 100%;
     width: 100%;
-    background-image: url(assets/img/moticowall.jpg);
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(assets/img/moticowall.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: 'Times New Roman', Times, serif;
+    background-attachment: fixed;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
 .menu {
@@ -18,13 +43,31 @@ html {
 }
 
 
+#catalogo {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(10, 10, 10, 0.9) 100%);
+    padding: 60px 20px;
+    min-height: 100vh;
+    position: relative;
+}
+
+#catalogo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+}
+
 .contenedor {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-    padding: 20px;
-    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 40px 15px;
+    perspective: 1000px;
 }
 
 
@@ -35,159 +78,613 @@ html {
 
 
 .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
-    border-radius: 30px;
+    border-radius: 24px 24px 0 0;
     position: relative;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    will-change: transform;
 }
 
-.susuki:hover, .yamaha:hover, .ktm:hover, .nmax:hover, .auteco:hover, .camilo:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 5px white,
-                0 0 10px white,
-                0 0 15px white;
-    transition: 0.3s ease;
-}
-
-.title {
-    font-size: 45px;
-    margin: 20px 0;
-    text-align: center;
-    color:white;
-    text-shadow: 5px 0 0 black;
-}
-
-.hi {
-    font-size: 40px;
-    color: white;
-    border-radius: 20px;
+.hero-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    text-shadow: 5px 0 0 black;
+    animation: fadeIn 1s ease-in;
 }
 
-.susuki2, .camilo2, .yamaha2, .ktm2, .nmax2, .auteco2 {
+.title {
+    font-size: 60px;
+    font-weight: 700;
+    margin: 20px 0;
+    text-align: center;
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.title-glow {
+    background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.5));
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hi {
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    text-align: center;
+    line-height: 1.6;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 60px 0;
+    color: white;
+    text-transform: lowercase;
+    letter-spacing: 2px;
     position: relative;
-    bottom: 0;
-    left: 0;
+    display: inline-block;
     width: 100%;
-    color: white;
-    text-align: center;
-    padding: 5px;
 }
 
-/* ===== RELOJ ===== */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, #00ff88, #00ccff);
+    margin: 20px auto 0;
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+}
+
+.moto-card {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    overflow: visible;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+    transform-style: preserve-3d;
+    margin: 20px;
+    cursor: pointer;
+}
+
+/* Hover solo en desktop */
+@media (hover: hover) and (pointer: fine) {
+    .moto-card:hover {
+        transform: translateY(-15px) rotateX(5deg);
+        border: 1px solid rgba(0, 255, 136, 0.4);
+        box-shadow: 0 20px 60px 0 rgba(0, 255, 136, 0.3),
+                    0 0 30px 0 rgba(0, 255, 136, 0.2);
+    }
+    
+    .moto-card:hover::before {
+        opacity: 1;
+    }
+    
+    .moto-card:hover .moto-info h3 {
+        color: #00ff88;
+    }
+    
+    .moto-card:hover .precio {
+        transform: scale(1.1);
+        background: rgba(0, 255, 136, 0.2);
+        border-color: rgba(0, 255, 136, 0.6);
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    }
+    
+    .moto-card:hover .btn-comprar {
+        background: #00ff88;
+        color: #0a0a0a;
+        transform: translateY(0);
+    }
+    
+    .moto-card:hover .susuki,
+    .moto-card:hover .yamaha, 
+    .moto-card:hover .ktm, 
+    .moto-card:hover .nmax, 
+    .moto-card:hover .auteco, 
+    .moto-card:hover .camilo {
+        filter: brightness(1.15) contrast(1.1) saturate(1.2);
+    }
+}
+
+/* Touch feedback para móvil */
+@media (hover: none) and (pointer: coarse) {
+    .moto-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+.moto-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, transparent 50%, rgba(0, 204, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.btn-comprar {
+    display: inline-block;
+    padding: 10px 24px;
+    margin-top: 12px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid rgba(0, 255, 136, 0.4);
+    border-radius: 50px;
+    color: #00ff88;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(5px);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-comprar:active {
+    transform: scale(0.95);
+}
+
+.moto-info {
+    padding: 25px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+    position: relative;
+    z-index: 2;
+}
+
+.moto-info h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+
+.precio {
+    font-size: 32px;
+    font-weight: 800;
+    color: #00ff88;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 50px;
+    border: 2px solid rgba(0, 255, 136, 0.3);
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+}
+
+/* reloj - oculto por defecto, se puede activar si se necesita */
 #reloj {
-    font-size: 30px;
+    display: none;
+    font-size: 18px;
+    font-weight: 600;
     color: white;
     text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
     position: fixed;
-    top: 10px;
+    top: 15px;
     right: 20px;
-    background-color: hsla(0, 0%, 0%, 0.5);
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    z-index: 999;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
 }
 
-/* Suaviza animaciones */
-.susuki, .yamaha, .ktm {
-    transition: transform 0.1s linear;
-}
-
-/* ======================
-   BOTÓN MENÚ
-====================== */
+/* boton del menu */
 #menu-btn {
-    font-size: 30px;
-    background: none;
-    border: none;
+    font-size: 26px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     cursor: pointer;
     position: fixed;
-    top: 15px;
+    top: 20px;
     left: 20px;
     z-index: 1001;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-/* ======================
-   SIDEBAR
-====================== */
+@media (hover: hover) {
+    #menu-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    }
+}
+
+#menu-btn:active {
+    transform: scale(0.95);
+}
+
+/*sidebar*/
 #sidebar {
     position: fixed;
     left: 0;
     top: 0;
-    width: 0; /* Empieza cerrado */
+    width: 0;
     height: 100%;
-    background: #111;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 60px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 80px;
     z-index: 1002;
 }
 
-/* Enlaces dentro del menú */
 #sidebar a {
-    padding: 10px 20px;
+    padding: 18px 30px;
     display: block;
     color: white;
     text-decoration: none;
+    font-size: 18px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
+#sidebar a:active,
 #sidebar a:hover {
-    background: #333;
+    background: rgba(0, 255, 136, 0.1);
+    border-left: 3px solid #00ff88;
+    padding-left: 40px;
+    color: #00ff88;
 }
 
-/* ======================
-   FONDO OSCURO
-====================== */
+/* fondo dark */
 #blur-overlay {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     display: none;
     top: 0;
     left: 0;
     z-index: 1000;
+    cursor: pointer;
 }
 
-/* ===== sección videos ===== */
-
+/* seccion de videos */
 #videos {
-    background: #111;
+    background: rgba(10, 10, 10, 0.8);
     color: white;
-    padding: 60px 20px;
+    padding: 80px 20px;
     text-align: center;
+    min-height: 100vh;
 }
 
 .titulo-videos {
-    font-size: 50px;
-    margin-bottom: 20px;
+    font-size: 42px;
+    font-weight: 600;
+    margin-bottom: 50px;
+    text-transform: capitalize;
 }
 
 .contenedor-videos {
     display: flex;
-    justify-content: space-around; /* los centra */
-    gap: 5px; /* espacio entre ellos */
+    justify-content: center;
+    gap: 30px;
     flex-wrap: nowrap;
     width: 100%;
-    height: 100%;
     align-items: center;
-    
+    padding: 20px;
 }
 
 .video-card {
-    width: 100%; /* tamaño fijo bonito */
+    width: 100%;
+    max-width: 400px;
     height: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.video-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 45px 0 rgba(0, 255, 255, 0.3);
 }
 
 .video-card video {
-    width: 100%; /* ocupa todo el ancho del card */
-    height: 100%; /* mantiene proporción */
-    border-radius: 20px; /* bordes suaves */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
 }
 
 section {
-    height: 100vh;
+    min-height: 100vh;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN OPTIMIZADO
+================================= */
+
+/* Tablets grandes y desktop pequeño */
+@media (max-width: 1200px) {
+    .contenedor {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        padding: 30px 15px;
+    }
+    
+    .moto-card {
+        margin: 15px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+    .title {
+        font-size: 48px;
+    }
+    
+    .section-title {
+        font-size: 38px;
+        margin-bottom: 40px;
+    }
+    
+    #catalogo {
+        padding: 50px 15px;
+    }
+    
+    .contenedor {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll; /* Mejor performance en móvil */
+    }
+    
+    .title {
+        font-size: 36px;
+        letter-spacing: 1px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+    
+    .section-title::after {
+        width: 80px;
+        height: 3px;
+    }
+    
+    .contenedor {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px 10px;
+    }
+    
+    .moto-card {
+        margin: 10px;
+    }
+    
+    .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
+        height: 220px;
+    }
+    
+    .hi {
+        font-size: 18px;
+        padding: 25px 20px;
+        max-width: 90%;
+    }
+    
+    .precio {
+        font-size: 28px;
+        padding: 6px 16px;
+    }
+    
+    .btn-comprar {
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+    
+    .contenedor-videos {
+        flex-direction: column;
+        gap: 25px;
+        padding: 15px;
+    }
+    
+    .video-card {
+        height: 400px;
+        max-width: 100%;
+    }
+    
+    .titulo-videos {
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+    
+    #videos {
+        padding: 60px 15px;
+    }
+    
+    #menu-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+        top: 15px;
+        left: 15px;
+    }
+    
+    #sidebar {
+        width: 0;
+    }
+    
+    #sidebar[style*="width: 250px"] {
+        width: 70vw !important;
+        max-width: 280px;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+    
+    .section-title {
+        font-size: 26px;
+        margin-bottom: 25px;
+    }
+    
+    .hi {
+        font-size: 16px;
+        padding: 20px 15px;
+    }
+    
+    .contenedor {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px 5px;
+    }
+    
+    .moto-card {
+        max-width: 100%;
+        margin: 8px;
+    }
+    
+    .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
+        height: 200px;
+    }
+    
+    .moto-info {
+        padding: 20px 15px;
+    }
+    
+    .moto-info h3 {
+        font-size: 18px;
+    }
+    
+    .precio {
+        font-size: 24px;
+        padding: 5px 14px;
+    }
+    
+    .btn-comprar {
+        padding: 8px 18px;
+        font-size: 12px;
+    }
+    
+    .video-card {
+        height: 300px;
+    }
+    
+    .titulo-videos {
+        font-size: 28px;
+    }
+    
+    #catalogo {
+        padding: 40px 10px;
+    }
+    
+    #videos {
+        padding: 50px 10px;
+    }
+    
+    #menu-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 22px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .title {
+        font-size: 24px;
+    }
+    
+    .section-title {
+        font-size: 22px;
+    }
+    
+    .hi {
+        font-size: 14px;
+    }
+    
+    .contenedor {
+        padding: 10px 5px;
+    }
+    
+    .moto-card {
+        margin: 5px;
+    }
 }
