@@ -36,6 +36,16 @@ body {
     min-height: 100vh;
 }
 
+#inicio {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.78)), url(assets/img/moticowall.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .menu {
     position: fixed;
     color: white;
@@ -94,7 +104,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100svh;
+    height: auto;
+    padding: 96px 20px 40px;
     animation: fadeIn 1s ease-in;
 }
 
@@ -508,7 +521,17 @@ section {
 /* Móviles grandes */
 @media (max-width: 768px) {
     body {
-        background-attachment: scroll; /* Mejor performance en móvil */
+        background-attachment: scroll;
+        background-position: center top;
+    }
+
+    #inicio {
+        background-position: center top;
+        background-size: cover;
+    }
+
+    .hero-content {
+        padding: 80px 16px 24px;
     }
     
     .title {
