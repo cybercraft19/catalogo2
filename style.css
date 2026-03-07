@@ -21,7 +21,7 @@ html {
 .contenedor {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
     flex-wrap: nowrap;
     padding: 20px;
     height: 100vh;
