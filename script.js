@@ -6,6 +6,9 @@
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Desactivar animaciones en móvil para mejor rendimiento
+const ANIMACIONES_ACTIVAS = !isMobile && !prefersReducedMotion;
+
 /* ===============================
    MENÚ LATERAL FUNCIONAL
 ================================= */
@@ -50,50 +53,42 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ===============================
-   MOVIMIENTO CIRCULAR ADAPTATIVO
+   MOVIMIENTO SUTIL SOLO EN DESKTOP
 ================================= */
 
-// Configuración adaptativa según dispositivo
-const animConfig = isMobile ? {
-    velocidadBase: 0.04,  // Más lento en móvil
-    radioBase: 60,        // Radio más pequeño
-    rotacionMultiplicador: 30
-} : {
-    velocidadBase: 0.08,  // Normal en desktop
-    radioBase: 150,       // Radio completo
-    rotacionMultiplicador: 50
+// Configuración minimalista solo para desktop
+const animConfig = {
+    velocidadBase: 0.03,  // Movimiento muy sutil
+    radioBase: 8          // Radio pequeño (solo flotación leve)
 };
 
-// Seleccionar motos y configurar animación
-const motos = [
-    { elemento: document.querySelector(".susuki"), angulo: 0, velocidad: animConfig.velocidadBase * 1.0, radio: animConfig.radioBase, rotacion: 0 },
-    { elemento: document.querySelector(".yamaha"), angulo: 1, velocidad: animConfig.velocidadBase * 1.25, radio: animConfig.radioBase * 0.93, rotacion: 0 },
-    { elemento: document.querySelector(".ktm"), angulo: 2, velocidad: animConfig.velocidadBase * 1.5, radio: animConfig.radioBase * 1.07, rotacion: 0 },
-    { elemento: document.querySelector(".nmax"), angulo: 3, velocidad: animConfig.velocidadBase * 1.13, radio: animConfig.radioBase * 0.97, rotacion: 0 },
-    { elemento: document.querySelector(".auteco"), angulo: 4, velocidad: animConfig.velocidadBase * 1.38, radio: animConfig.radioBase * 1.03, rotacion: 0 },
-    { elemento: document.querySelector(".camilo"), angulo: 5, velocidad: animConfig.velocidadBase * 1.06, radio: animConfig.radioBase * 1.1, rotacion: 0 }
-].filter(moto => moto.elemento !== null); // Filtrar elementos no encontrados
+// Seleccionar imágenes solo si las animaciones están activas
+const motos = ANIMACIONES_ACTIVAS ? [
+    { elemento: document.querySelector(".susuki"), angulo: 0, velocidad: animConfig.velocidadBase * 1.0, radio: animConfig.radioBase },
+    { elemento: document.querySelector(".yamaha"), angulo: 1, velocidad: animConfig.velocidadBase * 1.2, radio: animConfig.radioBase * 0.9 },
+    { elemento: document.querySelector(".ktm"), angulo: 2, velocidad: animConfig.velocidadBase * 1.4, radio: animConfig.radioBase * 1.1 },
+    { elemento: document.querySelector(".nmax"), angulo: 3, velocidad: animConfig.velocidadBase * 1.1, radio: animConfig.radioBase },
+    { elemento: document.querySelector(".auteco"), angulo: 4, velocidad: animConfig.velocidadBase * 1.3, radio: animConfig.radioBase * 1.05 },
+    { elemento: document.querySelector(".camilo"), angulo: 5, velocidad: animConfig.velocidadBase * 1.15, radio: animConfig.radioBase * 0.95 }
+].filter(moto => moto.elemento !== null) : [];
 
-let animacionActiva = !prefersReducedMotion; // Respetar preferencia de movimiento reducido
+let animacionActiva = ANIMACIONES_ACTIVAS;
 let animationFrameId = null;
 
-// Función optimizada de animación
+// Función de animación SIN ROTACIÓN - solo flotación sutil
 function moverMotos() {
     if (!animacionActiva) return;
     
     motos.forEach(moto => {
-        // Incrementar ángulo para movimiento circular
+        // Incrementar ángulo para movimiento circular suave
         moto.angulo += moto.velocidad;
         
-        // Incrementar rotación de la imagen
-        moto.rotacion += moto.velocidad * animConfig.rotacionMultiplicador;
-        
-        // Calcular posición circular
+        // Calcular posición circular (flotación leve)
         const x = Math.cos(moto.angulo) * moto.radio;
         const y = Math.sin(moto.angulo) * moto.radio;
         
-        // Aplicar transformación usando will-change para mejor performance
-        moto.elemento.style.transform = `translate(${x}px, ${y}px) rotate(${moto.rotacion}deg)`;
+        // Aplicar solo traslación (SIN rotación)
+        moto.elemento.style.transform = `translate(${x}px, ${y}px)`;
     });
     
     // Continuar animación

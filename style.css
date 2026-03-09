@@ -24,6 +24,24 @@
     }
 }
 
+/* Optimizaciones de rendimiento general */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Mejorar rendimiento de scroll en móvil */
+@media (max-width: 768px) {
+    * {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Reducir complejidad visual en móvil */
+    .moto-card::before {
+        display: none;
+    }
+}
+
 html {
     scroll-behavior: smooth;
     background-color: #0a0a0a;
@@ -105,7 +123,13 @@ body {
     display: block;
     transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
-    will-change: transform;
+}
+
+/* Habilitar will-change solo en desktop con animaciones */
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+    .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
+        will-change: transform;
+    }
 }
 
 .hero-content {
@@ -212,12 +236,22 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     overflow: hidden;
-    transition: border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
-    transform-style: preserve-3d;
     margin: 20px;
     cursor: pointer;
-    perspective: 1500px;
+    /* Optimización para móvil */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Transform solo en desktop */
+@media (min-width: 769px) {
+    .moto-card {
+        transform-style: preserve-3d;
+        perspective: 1500px;
+        transition: border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
 }
 
 /* Contenedor interno para el flip */
@@ -226,20 +260,13 @@ body {
     width: 100%;
     min-height: 520px;
     text-align: center;
-    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
 }
 
-/* Flip al hacer hover */
-@media (hover: hover) and (pointer: fine) {
+/* Flip solo en desktop con hover */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
     .moto-card:hover .card-inner {
-        transform: rotateY(180deg);
-    }
-}
-
-/* Touch: flip al hacer tap (sin hover) */
-@media (hover: none) and (pointer: coarse) {
-    .card-link:active .card-inner {
         transform: rotateY(180deg);
     }
 }
@@ -280,13 +307,13 @@ body {
     border-radius: 24px;
 }
 
-/* Hover solo en desktop */
-@media (hover: hover) and (pointer: fine) {
+/* Hover solo en desktop con mouse */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
     .moto-card:hover {
-        transform: translateY(-15px) scale(1.02);
+        transform: translateY(-12px);
         border: 1px solid var(--accent-mid);
-        box-shadow: 0 20px 60px 0 rgba(255, 122, 0, 0.3),
-                    0 0 30px 0 rgba(255, 122, 0, 0.2);
+        box-shadow: 0 20px 50px 0 rgba(255, 122, 0, 0.25),
+                    0 0 25px 0 rgba(255, 122, 0, 0.15);
     }
     
     .moto-card:hover::before {
@@ -547,14 +574,17 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.4s ease;
+    transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-.video-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border: 1px solid rgba(255, 170, 70, 0.35);
-    box-shadow: 0 15px 45px 0 rgba(255, 122, 0, 0.32);
+/* Hover solo en desktop */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+    .video-card:hover {
+        transform: translateY(-8px);
+        border: 1px solid rgba(255, 170, 70, 0.35);
+        box-shadow: 0 15px 40px 0 rgba(255, 122, 0, 0.25);
+    }
 }
 
 .video-card video {
@@ -641,14 +671,28 @@ section {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
         padding: 20px 10px;
+        /* Desactivar perspective en móvil */
+        perspective: none;
     }
     
     .moto-card {
         margin: 10px;
+        /* Simplificar en móvil */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .card-inner {
+        /* Desactivar 3D en móvil */
+        transform-style: flat;
+        transition: none;
     }
     
     .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
-        height: 220px;
+        height: 280px;
+        /* Asegurar que no hay rotación en móvil */
+        transform: none !important;
+        will-change: auto;
     }
     
     .hi {
@@ -725,15 +769,26 @@ section {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 15px 5px;
+        perspective: none;
     }
     
     .moto-card {
         max-width: 100%;
         margin: 8px;
+        /* Simplificar aún más en pantallas pequeñas */
+        transform: none !important;
+    }
+    
+    .card-inner {
+        transform-style: flat;
+        transition: none;
     }
     
     .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
-        height: 200px;
+        height: 240px;
+        /* Asegurar que no hay rotación en móvil */
+        transform: none !important;
+        will-change: auto;
     }
     
     .moto-info {
