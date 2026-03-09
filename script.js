@@ -149,3 +149,52 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+/* ===============================
+   FLIP DE TARJETAS EN MÓVIL
+================================= */
+
+// Solo activar flip táctil en dispositivos móviles (sin hover)
+if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+    const cardLinks = document.querySelectorAll('.card-link');
+    
+    cardLinks.forEach(cardLink => {
+        const motoCard = cardLink.querySelector('.moto-card');
+        let isFlipped = false;
+        let tapTimeout = null;
+        
+        cardLink.addEventListener('click', function(e) {
+            // Si está volteada, permitir que abra el enlace
+            if (isFlipped) {
+                return; // Permitir navegación
+            }
+            
+            // Primera tap: voltear tarjeta
+            e.preventDefault();
+            motoCard.classList.add('flipped');
+            isFlipped = true;
+            
+            // Después de 3 segundos, permitir que vuelva a su estado normal
+            tapTimeout = setTimeout(() => {
+                motoCard.classList.remove('flipped');
+                isFlipped = false;
+            }, 3000);
+        });
+        
+        // También permitir voltear con doble tap
+        let lastTap = 0;
+        motoCard.addEventListener('touchend', function(e) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (tapLength < 500 && tapLength > 0) {
+                // Doble tap: regresar al frente
+                e.preventDefault();
+                motoCard.classList.remove('flipped');
+                isFlipped = false;
+                if (tapTimeout) clearTimeout(tapTimeout);
+            }
+            lastTap = currentTime;
+        });
+    });
+}
+

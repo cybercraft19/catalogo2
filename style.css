@@ -240,7 +240,9 @@ body {
     box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
     margin: 20px;
     cursor: pointer;
-    /* Optimización para móvil */
+    /* Habilitar 3D en todos los dispositivos */
+    transform-style: preserve-3d;
+    perspective: 1500px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
 }
@@ -248,8 +250,6 @@ body {
 /* Transform solo en desktop */
 @media (min-width: 769px) {
     .moto-card {
-        transform-style: preserve-3d;
-        perspective: 1500px;
         transition: border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     }
 }
@@ -264,11 +264,16 @@ body {
     transform-style: preserve-3d;
 }
 
-/* Flip solo en desktop con hover */
+/* Flip en desktop con hover */
 @media (hover: hover) and (pointer: fine) and (min-width: 769px) {
     .moto-card:hover .card-inner {
         transform: rotateY(180deg);
     }
+}
+
+/* Flip en móvil con clase toggle */
+.moto-card.flipped .card-inner {
+    transform: rotateY(180deg);
 }
 
 /* Caras frontal y trasera */
@@ -671,21 +676,19 @@ section {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
         padding: 20px 10px;
-        /* Desactivar perspective en móvil */
-        perspective: none;
     }
     
     .moto-card {
         margin: 10px;
-        /* Simplificar en móvil */
+        /* Simplificar backdrop en móvil */
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
     }
     
     .card-inner {
-        /* Desactivar 3D en móvil */
-        transform-style: flat;
-        transition: none;
+        /* Mantener 3D para el flip en móvil */
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
@@ -769,19 +772,17 @@ section {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 15px 5px;
-        perspective: none;
     }
     
     .moto-card {
         max-width: 100%;
         margin: 8px;
-        /* Simplificar aún más en pantallas pequeñas */
-        transform: none !important;
     }
     
     .card-inner {
-        transform-style: flat;
-        transition: none;
+        /* Mantener 3D para el flip */
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .susuki, .yamaha, .ktm, .nmax, .auteco, .camilo {
