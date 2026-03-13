@@ -12,21 +12,89 @@
     <title>Catálogo de Actrices | Galería de Videos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=9.0">
 </head>
 <body>
     <header class="header">
         <button id="menu-btn" aria-label="Menú de navegación" aria-expanded="false">☰</button>
 
+        <!-- Botón de usuario -->
+        <div class="user-section">
+            <button id="user-btn" class="user-button" aria-label="Cuenta de usuario">
+                <span class="user-icon">&#9776;</span>
+                <span id="user-name" class="user-name">Invitado</span>
+            </button>
+        </div>
+
         <div id="sidebar" role="navigation" aria-label="Menú principal">
             <a href="#inicio" class="sidebar-link">Inicio</a>
             <a href="#catalogo" class="sidebar-link">Catálogo</a>
             <a href="#videos" class="sidebar-link">Videos</a>
+            <a href="#videos-dia" class="sidebar-link">Videos del Día</a>
+            <a href="#recomendar" class="sidebar-link">Recomendar</a>
+            <a href="#" class="sidebar-link" id="sidebar-profile">Mi Perfil</a>
         </div>
 
         <div id="blur-overlay"></div>
     </header>
+
+    <!-- Modal de Login/Registro -->
+    <div id="auth-modal" class="modal-auth hidden">
+        <div class="auth-modal-content">
+            <button class="modal-close">&times;</button>
+            <h3 class="auth-title">Acceso a tu cuenta</h3>
+            
+            <div id="login-form" class="auth-form">
+                <h4>Iniciar Sesión</h4>
+                <input type="text" id="login-username" placeholder="Nombre de usuario" class="auth-input" required>
+                <input type="password" id="login-password" placeholder="Contraseña" class="auth-input" required>
+                <button type="button" id="login-submit" class="auth-submit-btn">Entrar</button>
+                <p class="auth-switch">¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+            </div>
+            
+            <div id="register-form" class="auth-form hidden">
+                <h4>Crear Cuenta</h4>
+                <input type="text" id="register-username" placeholder="Nombre de usuario" class="auth-input" required>
+                <input type="email" id="register-email" placeholder="Email" class="auth-input" required>
+                <input type="password" id="register-password" placeholder="Contraseña" class="auth-input" required>
+                <input type="password" id="register-confirm" placeholder="Confirmar contraseña" class="auth-input" required>
+                <button type="button" id="register-submit" class="auth-submit-btn">Registrarse</button>
+                <p class="auth-switch">¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Usuario -->
+    <div id="user-panel" class="user-panel hidden">
+        <div class="user-panel-content">
+            <button class="modal-close">&times;</button>
+            <div class="user-panel-header">
+                <div class="user-avatar">U</div>
+                <h3 id="panel-username">Usuario</h3>
+                <p id="panel-email" class="user-email">email@ejemplo.com</p>
+            </div>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-favorites">0</span>
+                    <span class="stat-label">Favoritos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-ratings">0</span>
+                    <span class="stat-label">Calificaciones</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-recommendations">0</span>
+                    <span class="stat-label">Recomendaciones</span>
+                </div>
+            </div>
+            <div class="user-actions">
+                <button id="view-favorites" class="panel-btn">Ver Favoritos</button>
+                <button id="view-ratings" class="panel-btn">Mis Calificaciones</button>
+                <button id="logout-btn" class="panel-btn logout-btn">Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
 
     <section id="inicio">
         <div class="hero-content">
@@ -43,120 +111,220 @@
         <section id="catalogo">
             <h2 class="section-title">actrices destacadas</h2>
 
-            <div class="contenedor">
-                <!-- TARJETA 01: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="PON_AQUI_LINK_VIDEO_01" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 01">
-                    <div class="moto-card susuki2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="susuki" src="assets/img/mia.jpg" alt="Mia" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Mia</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
-                                </div>
-                            </div>
-                            <div class="card-back">
-                                <img src="assets/img/miaback.jpg" alt="Mia reverso" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
-                </a>
+            <!-- BUSCADOR -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Buscar actriz..." aria-label="Buscador de actrices">
+                <button id="favorites-btn" class="favorites-toggle" aria-label="Ver solo favoritos">Favoritos</button>
+            </div>
 
-                <!-- TARJETA 02: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="PON_AQUI_LINK_VIDEO_02" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 02">
-                    <div class="moto-card yamaha2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="yamaha" src="assets/img/lana.jpg" alt="Lana" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Lana</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
+            <div class="contenedor" id="catalogo-container">
+                <!-- TARJETA 01 -->
+                <div class="card-wrapper" data-actress="Mia">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Mia">♡</button>
+                    <a class="card-link" href="PON_AQUI_LINK_VIDEO_01" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Mia">
+                        <div class="moto-card susuki2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="susuki" src="assets/img/mia.jpg" alt="Mia" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Mia</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Mia" aria-label="Ver galería de Mia">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/miaback.jpg" alt="Mia reverso" loading="lazy">
                                 </div>
                             </div>
-                            <div class="card-back">
-                                <img src="assets/img/lanaback.webp" alt="Lana reverso" loading="lazy">
-                            </div>
                         </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
                     </div>
-                </a>
+                </div>
 
-                <!-- TARJETA 03: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="https://www.youtube.com/watch?v=5qmme1pGb4U&pp=ygUNZ2VtaWRvcyB0cm9sbA%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 03">
-                    <div class="moto-card ktm2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="ktm" src="assets/img/violet.jpg" alt="Violet" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Violet</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
+                <!-- TARJETA 02 -->
+                <div class="card-wrapper" data-actress="Lana">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Lana">♡</button>
+                    <a class="card-link" href="PON_AQUI_LINK_VIDEO_02" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Lana">
+                        <div class="moto-card yamaha2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="yamaha" src="assets/img/lana.jpg" alt="Lana" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Lana</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Lana" aria-label="Ver galería de Lana">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/lanaback.webp" alt="Lana reverso" loading="lazy">
                                 </div>
                             </div>
-                            <div class="card-back">
-                                <img src="assets/img/violetback.jpg" alt="Violet reverso" loading="lazy">
-                            </div>
                         </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
                     </div>
-                </a>
+                </div>
 
-                <!-- TARJETA 04: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="PON_AQUI_LINK_VIDEO_04" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 04">
-                    <div class="moto-card nmax2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="nmax" src="assets/img/savanah.jpg" alt="Savanah" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Savanah</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
+                <!-- TARJETA 03 -->
+                <div class="card-wrapper" data-actress="Violet">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Violet">♡</button>
+                    <a class="card-link" href="https://www.youtube.com/watch?v=5qmme1pGb4U&pp=ygUNZ2VtaWRvcyB0cm9sbA%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Violet">
+                        <div class="moto-card ktm2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="ktm" src="assets/img/violet.jpg" alt="Violet" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Violet</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Violet" aria-label="Ver galería de Violet">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/violetback.jpg" alt="Violet reverso" loading="lazy">
                                 </div>
                             </div>
-                            <div class="card-back">
-                                <img src="assets/img/savanaback" alt="Savanah reverso" loading="lazy">
-                            </div>
                         </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
                     </div>
-                </a>
+                </div>
 
-                <!-- TARJETA 05: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="PON_AQUI_LINK_VIDEO_05" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 05">
-                    <div class="moto-card auteco2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="auteco" src="assets/img/lexi.jpg" alt="Lexi" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Lexi</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
+                <!-- TARJETA 04 -->
+                <div class="card-wrapper" data-actress="Savanah">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Savanah">♡</button>
+                    <a class="card-link" href="PON_AQUI_LINK_VIDEO_04" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Savanah">
+                        <div class="moto-card nmax2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="nmax" src="assets/img/savanah.jpg" alt="Savanah" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Savanah</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Savanah" aria-label="Ver galería de Savanah">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/savanaback" alt="Savanah reverso" loading="lazy">
                                 </div>
                             </div>
-                            <div class="card-back">
-                                <img src="assets/img/lexiback.webp" alt="Lexi reverso" loading="lazy">
-                            </div>
                         </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
                     </div>
-                </a>
+                </div>
 
-                <!-- TARJETA 06: cambia href, src frontal y src trasera -->
-                <a class="card-link" href="PON_AQUI_LINK_VIDEO_06" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Actriz 06">
-                    <div class="moto-card camilo2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img class="camilo" src="assets/img/camilo.jpeg" alt="Actriz 06" loading="lazy">
-                                <div class="moto-info">
-                                    <h3>Camilo</h3>
-                                    <p class="precio">Video disponible</p>
-                                    <span class="btn-comprar">Abrir video</span>
+                <!-- TARJETA 05 -->
+                <div class="card-wrapper" data-actress="Lexi">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Lexi">♡</button>
+                    <a class="card-link" href="PON_AQUI_LINK_VIDEO_05" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Lexi">
+                        <div class="moto-card auteco2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="auteco" src="assets/img/lexi.jpg" alt="Lexi" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Lexi</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Lexi" aria-label="Ver galería de Lexi">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/lexiback.webp" alt="Lexi reverso" loading="lazy">
                                 </div>
                             </div>
-                            <div class="card-back">
-                                <img src="assets/img/camilo.jpeg" alt="Camilo reverso" loading="lazy">
+                        </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
+                    </div>
+                </div>
+
+                <!-- TARJETA 06 -->
+                <div class="card-wrapper" data-actress="Camilo">
+                    <button class="favorite-btn" title="Agregar a favoritos" aria-label="Favorite Camilo">♡</button>
+                    <a class="card-link" href="PON_AQUI_LINK_VIDEO_06" target="_blank" rel="noopener noreferrer" aria-label="Abrir video de Camilo">
+                        <div class="moto-card camilo2">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img class="camilo" src="assets/img/camilo.jpeg" alt="Camilo" loading="lazy">
+                                    <div class="moto-info">
+                                        <h3>Camilo</h3>
+                                        <p class="precio">Video disponible</p>
+                                        <button class="btn-gallery" data-actress="Camilo" aria-label="Ver galería de Camilo">Galería</button>
+                                        <span class="btn-comprar">Abrir video</span>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <img src="assets/img/camilo.jpeg" alt="Camilo reverso" loading="lazy">
+                                </div>
                             </div>
                         </div>
+                    </a>
+                    <div class="rating-container-external">
+                        <div class="stars" data-rating="0"></div>
+                        <span class="rating-count">0</span>
                     </div>
-                </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN VIDEOS DEL DÍA -->
+        <section id="videos-dia" class="videos-dia-section">
+            <h2 class="section-title">Videos del Día</h2>
+            <p class="section-subtitle">Los videos más recomendados por la comunidad hoy</p>
+            
+            <div class="videos-dia-container" id="videos-dia-container">
+                <!-- Se llenarán dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE RECOMENDACIONES -->
+        <section id="recomendar" class="recommend-section">
+            <h2 class="section-title">Recomienda Contenido</h2>
+            <p class="section-subtitle">Comparte tus actrices y videos favoritos con la comunidad</p>
+            
+            <div class="recommend-container">
+                <div class="recommend-form-wrapper">
+                    <h3>Recomendar Video</h3>
+                    <form id="recommend-video-form" class="recommend-form">
+                        <input type="text" id="video-actress-name" placeholder="Nombre de la actriz" class="recommend-input" required>
+                        <input type="url" id="video-url" placeholder="URL del video" class="recommend-input" required>
+                        <textarea id="video-description" placeholder="¿Por qué recomiendas este video?" class="recommend-textarea" rows="3"></textarea>
+                        <button type="submit" class="recommend-submit-btn">Enviar Recomendación de Video</button>
+                    </form>
+                </div>
+                
+                <div class="recommend-form-wrapper">
+                    <h3>Recomendar Actriz</h3>
+                    <form id="recommend-actress-form" class="recommend-form">
+                        <input type="text" id="actress-name" placeholder="Nombre de la actriz" class="recommend-input" required>
+                        <input type="url" id="actress-image-url" placeholder="URL de la imagen" class="recommend-input" required>
+                        <textarea id="actress-description" placeholder="¿Por qué recomiendas esta actriz?" class="recommend-textarea" rows="3"></textarea>
+                        <button type="submit" class="recommend-submit-btn">Enviar Recomendación de Actriz</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Lista de recomendaciones pendientes -->
+            <div class="recommendations-list">
+                <h3>Últimas Recomendaciones</h3>
+                <div id="recommendations-container" class="recommendations-grid">
+                    <!-- Se llenarán dinámicamente -->
+                </div>
             </div>
         </section>
 
@@ -188,8 +356,33 @@
         </section>
     </main>
 
+    <!-- MODAL DE GALERÍA -->
+    <div id="gallery-modal" class="modal-gallery hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3 class="modal-title" id="gallery-title" style="margin-bottom: 5px;">Galería</h3>
+            <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 25px;">Haz clic en una imagen para ver más detalles</p>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CALIFICACIÓN -->
+    <div id="rating-modal" class="modal-rating hidden">
+        <div class="rating-modal-content">
+            <button class="modal-close">&times;</button>
+            <h3 style="margin-bottom: 10px;">Califica a esta actriz</h3>
+            <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 20px;">¿Cuál fue tu experiencia?</p>
+            <div class="star-rating" id="star-rating">
+                <!-- Se genera dinámicamente -->
+            </div>
+            <button id="rating-submit" class="rating-submit-btn">Enviar calificación</button>
+        </div>
+    </div>
+
     <footer></footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=9.0"></script>
 </body>
 </html>
